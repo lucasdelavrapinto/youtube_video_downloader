@@ -1,5 +1,6 @@
 from pytube import YouTube
 from prompter import yesno
+from pytube.cli import on_progress
 
 import os
 pathDownload = './downloads';
@@ -14,7 +15,7 @@ def set_global_value(value):
 def downloadYouTube(videourl, path):
 
     if(videourl not in links_baixados):
-        yt = YouTube(videourl)
+        yt = YouTube(videourl, on_progress_callback=on_progress)
         yt = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
         if not os.path.exists(path):
             os.makedirs(path)
