@@ -16,7 +16,8 @@ def downloadYouTube(videourl, path):
 
     if(videourl not in links_baixados):
         yt = YouTube(videourl, on_progress_callback=on_progress)
-        yt = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
+        # yt = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
+        yt = yt.streams.get_highest_resolution()
         if not os.path.exists(path):
             os.makedirs(path)
         yt.download(path)
